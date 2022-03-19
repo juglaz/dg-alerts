@@ -33,7 +33,7 @@ def update_prev_featured(site_key, featured):
         all_featured = json.loads(f.read())
         all_featured[site_key] = featured
         f.seek(0)
-        f.write(json.dumps(all_featured))
+        f.write(json.dumps(all_featured, indent=4))
         f.truncate()
 
 
@@ -68,7 +68,7 @@ def update_flairs_json():
         reddit = get_reddit()
         flairs_raw = reddit.post("r/DiscReleases/api/flairselector/", data={"is_newlink": True})["choices"]
         flairs = {f['flair_text']: f['flair_template_id'] for f in flairs_raw}
-        f.write(json.dumps(flairs))
+        f.write(json.dumps(flairs, indent=4))
 
 
 def get_flair_id(flair):

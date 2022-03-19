@@ -83,10 +83,10 @@ def get_markdown(name, info):
 
     '''
     if info['colors']:
-        markdown += f"**Available Colors:** {', '.join(info['colors'])}  "
+        markdown += f"**Available Colors:** {', '.join(info['colors'])}\n\n"
     if info['weights']:
-        markdown += f"**Available Weights** {', '.join(info['weights'])}"
-    markdown += '\n\n' + u.BOT_NOTE
+        markdown += f"**Available Weights** {', '.join(info['weights'])}\n\n"
+    markdown += u.BOT_NOTE
     return u.clean_markdown(markdown)
 
 
