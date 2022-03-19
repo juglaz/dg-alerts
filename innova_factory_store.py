@@ -61,8 +61,7 @@ def get_disc_info(url):
         'price': price,
         'description': description,
         'images': images,
-        'url': url,
-        'flair_id': FLAIR_ID
+        'url': url
     }
 
 
@@ -94,7 +93,8 @@ def get_markdown(name, info):
 def get_post(name, info):
     return {
         'title': f'New Drop at {SITE_NAME}: {name}',
-        'content': get_markdown(name, info)
+        'content': get_markdown(name, info),
+        'flair_id': FLAIR_ID
     }
 
 
@@ -105,5 +105,5 @@ def get_posts():
     posts = [get_post(name, info) for name, info in new_drops.items()]
 
     # write back featured items to prev_featured.json
-    u.update_prev_featured(site_key, featured)
+    u.update_prev_featured(SITE_KEY, featured)
     return posts
