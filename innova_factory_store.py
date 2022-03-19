@@ -6,9 +6,11 @@ import random
 import util as u
 
 
-site_url = 'https://proshop.innovadiscs.com'
-site_name = 'Innova Factory Store'
-site_key = 'innova-factory-store'
+SITE_URL = 'https://proshop.innovadiscs.com'
+SITE_NAME = 'Innova Factory Store'
+SITE_KEY = 'innova-factory-store'
+FLAIR = 'Innova'
+FLAIR_ID = u.get_flair_id(FLAIR)
 
 
 def get_options(label_node):
@@ -59,13 +61,14 @@ def get_disc_info(url):
         'price': price,
         'description': description,
         'images': images,
-        'url': url
+        'url': url,
+        'flair_id': FLAIR_ID
     }
 
 
 def get_featured():
     ''' returns dict of all featured items with url '''
-    resp = requests.get(site_url)
+    resp = requests.get(SITE_URL)
     soup = BeautifulSoup(resp.content, 'html.parser')
     featured = {c.text: c.attrs['href'] for c in soup.select('.card-body a')}
     return featured
@@ -78,7 +81,7 @@ def get_markdown(name, info):
 
         **Description**  
         {info['description']}  
-        
+
     '''
     if info['colors']:
         markdown += f"**Available Colors:** {', '.join(info['colors'])}  "
@@ -90,13 +93,13 @@ def get_markdown(name, info):
 
 def get_post(name, info):
     return {
-        'title': f'New Drop at {site_name}: {name}',
+        'title': f'New Drop at {SITE_NAME}: {name}',
         'content': get_markdown(name, info)
     }
 
 
 def get_posts():
-    prev_featured = u.get_prev_featured(site_key)
+    prev_featured = u.get_prev_featured(SITE_KEY)
     featured = get_featured()
     new_drops = u.get_new_drops(prev_featured, featured, get_disc_info)
     posts = [get_post(name, info) for name, info in new_drops.items()]

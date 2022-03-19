@@ -1,5 +1,6 @@
 from IPython.display import display, Markdown
 import json
+import praw
 
 
 BOT_NOTE = '''
@@ -41,3 +42,36 @@ def get_new_drops(prev_featured, featured, get_disc_info):
     new_drops = [k for k in featured.keys() if k not in prev_featured.keys()]
     new_drops_info = {k: get_disc_info(featured[k]) for k in new_drops}
     return new_drops_info
+
+
+def get_reddit():
+    with open('client_secrets.json', 'r') as f:
+        creds = json.loads(f.read())
+
+    reddit = praw.Reddit(client_id=creds['client_id'],
+        client_secret=creds['client_secret'],
+        user_agent=creds['user_agent'],
+        redirect_uri=creds['redirect_uri'],
+        refresh_token=creds['refresh_token'],
+        validate_on_submit=True)
+    return reddit
+
+
+def get_subreddit(subr):
+    reddit = get_reddit()
+    subreddit = reddit.subreddit(subr)
+    return subreddit
+
+
+def update_flairs_json():
+    with open('flairs.json', 'w') as f:
+        reddit = get_reddit()
+        flairs_raw = reddit.post("r/DiscReleases/api/flairselector/", data={"is_newlink": True})["choices"]
+        flairs = {f['flair_text']: f['flair_template_id'] for f in flairs_raw}
+        f.write(json.dumps(flairs))
+
+
+def get_flair_id(flair):
+    with open('flairs.json', 'r') as f:
+        flairs = json.loads(f.read())
+        return flairs.get(flair)
