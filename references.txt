@@ -1,0 +1,8 @@
+Credentials Setup
+https://www.jcchouinard.com/get-reddit-api-credentials-with-praw/
+
+PRAW Basics
+https://www.jcchouinard.com/post-on-reddit-api-with-python-praw/
+
+My Reddit Apps
+https://www.reddit.com/prefs/apps
