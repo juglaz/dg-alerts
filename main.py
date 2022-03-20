@@ -20,7 +20,7 @@ def main(subr):
 def monitor_releases(subr):
     sched = BlockingScheduler()
 
-    @sched.scheduled_job('interval', hours=1)
+    @sched.scheduled_job('interval', minutes=1)
     def check_releases():
         main(subr)
 
