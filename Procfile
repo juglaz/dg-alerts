@@ -1,1 +1,1 @@
-monitor_releases: python main.py BotsPlayHere
+monitor_releases: python main.py DiscReleases
