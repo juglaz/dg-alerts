@@ -1,7 +1,9 @@
-import innova_factory_store as ifs
 import json
 import praw
+from apscheduler.schedulers.blocking import BlockingScheduler
+
 import util as u
+import innova_factory_store as ifs
 
 
 def main(subr):
@@ -15,5 +17,22 @@ def main(subr):
     print(f'Submitted {len(posts)} posts to r/{subr}')
 
 
+def monitor_releases(subr):
+    sched = BlockingScheduler()
+
+    @sched.scheduled_job('interval', hours=1)
+    def check_releases():
+        main(subr)
+
+    sched.start()
+
+
 if __name__ == '__main__':
-    main('BotsPlayHere')
+    import sys
+    if sys.argv:
+        subr = sys.argv[0]
+        if subr not in ('BotsPlayHere', 'DiscReleases'):
+            raise NotImplementedError('This bot is only intended to post to "DiscReleases" and "BotsPlayHere" for testing.')
+    else:
+        subr = 'BotsPlayHere'
+    monitor_releases(subr)

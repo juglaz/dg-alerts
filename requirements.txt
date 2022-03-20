@@ -1,0 +1,4 @@
+praw
+bs4
+APScheduler==3.0.0
+requests

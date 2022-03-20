@@ -1,0 +1,1 @@
+monitor_releases: python main.py BotsPlayHere

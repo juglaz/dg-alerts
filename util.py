@@ -1,11 +1,10 @@
-from IPython.display import display, Markdown
 import json
 import praw
 
 
 BOT_NOTE = '''
-### BTW, *This is my bot.*
-Please let me know if you have any feedback or if it's acting up.    
+### BTW, *this is my bot*.
+Please let me know if you have any feedback or if it's acting up.  
 *Cheers!*
 '''
 
@@ -20,6 +19,7 @@ def clean_markdown(markdown):
 
 def printmd(string):
     ''' Renders markdown in notebook output of codecell '''
+    from IPython.display import display, Markdown
     display(Markdown(string))
 
 
