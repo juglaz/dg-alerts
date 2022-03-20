@@ -30,9 +30,9 @@ def monitor_releases(subr):
 if __name__ == '__main__':
     import sys
     if sys.argv:
-        subr = sys.argv[0]
+        subr = sys.argv[1]
         if subr not in ('BotsPlayHere', 'DiscReleases'):
-            raise NotImplementedError('This bot is only intended to post to "DiscReleases" and "BotsPlayHere" for testing.')
+            raise NotImplementedError(f'Subreddit "{subr}" not allowed. This bot is only intended to post to "DiscReleases" and "BotsPlayHere" for testing.')
     else:
         subr = 'BotsPlayHere'
     monitor_releases(subr)
